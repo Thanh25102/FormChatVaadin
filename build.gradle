@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.2'
+    id 'io.spring.dependency-management' version '1.1.2'
+    id 'com.vaadin' version '24.1.4'
+}
+
+group = 'com.buimanhthanh'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+    maven { url = "https://maven.vaadin.com/vaadin-addons" }
+}
+
+ext {
+    set('vaadinVersion', "24.1.4")
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'com.vaadin:vaadin-spring-boot-starter'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // https://mvnrepository.com/artifact/org.vaadin.crudui/crudui
+    implementation 'org.vaadin.crudui:crudui:7.0.0'
+    // https://mvnrepository.com/artifact/com.vaadin/collaboration-engine
+    implementation 'com.vaadin:collaboration-engine:6.0.0'
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    // https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.4'
+
+
+
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "com.vaadin:vaadin-bom:${vaadinVersion}"
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
